@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Category: NLP - Lavine Hu</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Lavine Hu"><meta name="msapplication-TileImage" content="https://cdn.jsdelivr.net/gh/removeif/removeif-demo@latest/img/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Lavine Hu"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta property="og:type" content="blog"><meta property="og:title" content="Lavine Hu"><meta property="og:url" content="https://github.com/hlw95?tab=following"><meta property="og:site_name" content="Lavine Hu"><meta property="og:locale" content="en_US"><meta property="og:image" content="https://cdn.jsdelivr.net/gh/removeif/removeif-demo@latest/img/avatar.png"><meta property="article:author" content="Lavine Hu"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://cdn.jsdelivr.net/gh/removeif/removeif-demo@latest/img/avatar.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com"},"headline":"Lavine Hu","image":["http://example.com/img/og_image.png"],"author":{"@type":"Person","name":"Lavine Hu"},"description":""}</script><link rel="icon" href="https://cdn.jsdelivr.net/gh/removeif/removeif-demo@latest/img/favicon.png"><meta name="referrer" content="no-referrer-when-downgrade"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.12.0/css/all.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css?family=Ubuntu:400,600|Source+Code+Pro|Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Microsoft YaHei:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&amp;amp;subset=latin,latin-ext|Inconsolata|Itim|Lobster.css"><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="/js/globalUtils.js"></script><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/pace/1.0.2/pace.min.js"></script><meta name="generator" content="Hexo 5.4.0"></head><body class="is-3-column has-navbar-fixed-top"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Lavine Hu</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/message">留言</a></div><div class="navbar-end"><a class="navbar-item" id="night-nav" title="Night Mode" href="javascript:;"><i class="fas fa-moon" id="night-icon"></i></a></div></div></div></nav><script type="text/javascript" src="/js/theme-setting.js"></script><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><div class="card-content"><nav class="breadcrumb" aria-label="breadcrumbs"><ul><li><a href="/categories">Categories</a></li><li class="is-active"><a href="#" aria-current="page">NLP</a></li></ul></nav></div></div><!--!--><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-08-27  <a class="commentCountImg" href="/2021/08/27/concert/#comment-container"><span class="display-none-class">e6753e8b5df65d65ffd41f2474584eb9</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="e6753e8b5df65d65ffd41f2474584eb9">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>9 m  <i class="fas fa-pencil-alt"> </i>1.3 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/27/concert/">ConSERT A Contrastive Framework for Self-Supervised Sentence Representation Transfer</a></h1><div class="content"><p>BERT是二段式训练，预训练+微调。对比学习是属于自监督学习的一种，这篇文章主要是将对比学习结合到预训练过程，借助无标签数据来提升模型的能力，其实也是一种<strong>调整预训练</strong>的策略。</p>
+<h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1.背景"></a>1.背景</h2><p>首先，BERT其自身导出的句向量（不经过Fine-tune，对所有词向量求平均）会出现“坍缩（Collapse）”现象，即所有的句子都倾向于编码到一个较小的空间区域内，如图。为了解决这个问题，将对比学习结合到预训练过程，借助无标签数据来提升模型的能力。</p>
+<p><img src="/2021/08/27/concert/11.JPG" alt></p>
+<h2 id="2-原理"><a href="#2-原理" class="headerlink" title="2.原理"></a>2.原理</h2><p>给定一个模型为$M$,无监督数据集合为$\mathcal{D}$,我们希望通过构建自监督任务，使模型能够在目标任务上表现最好。</p>
+<h3 id="2-1-整体框架"><a href="#2-1-整体框架" class="headerlink" title="2.1 整体框架"></a>2.1 整体框架</h3><p><img src="/2021/08/27/concert/22.JPG" alt></p>
+<p>模型整体结构如上图所示，主要由三个部分组成。</p>
+<p>A <strong>data augmentation module</strong> that generates different views for input samples at the token embedding layer.</p>
+<p>A <strong>shared BERT encoder</strong> that computes sentence representations for each input text. During training, we use the average pooling of the token embeddings at the last layer to obtain sentence representations.</p>
+<p>A <strong>contrastive loss layer</strong> on top of the BERT encoder. It maximizes the agreement between one representation and its corresponding version that is augmented from the same sentence while keeping it distant from other sentence representations in the same batch.</p>
+<p>对于任意一个句子输入$x$，得到其对应的两个增强向量$e_i=T_1(x),e_j=T_2(x),e_i,e_j\in \mathbb{R}^{L\times d}$，然后经过shared BERT encoder编码为$r_i,r_j$,其中$T_1,T_2$为不同的数据增强方式，$L$为句子$x$的长度，$d$为隐藏单元的数量。从$\mathcal{D}$随机选取$N$个样本作为mini-batch，然后得到$2N$个增强样本，使用NT-Xent构造loss为</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{i,j}=-log\frac{exp(sim(r_i,r_j)/\tau)}{\sum_{k=1}^{2N} \mathbb{1}_{[k\neq i]}exp(sim(r_i,r_k)/\tau)}
+\\\mathcal{L}_{con}=\frac{1}{N}\sum_{(i,j)}\mathcal{L}_{i,j}</script><p>其中$sim(.)$为余弦相似度计算，$\tau$表示temperature，是一个超参数，实验中取0.1,$\mathbb{1}$是指示器，当$k=i$时，值为0。</p>
+<h3 id="2-2-数据增强策略"><a href="#2-2-数据增强策略" class="headerlink" title="2.2 数据增强策略"></a>2.2 数据增强策略</h3><p><strong>显式生成增强样本</strong>的方法包括：回译、同义词替换、意译等，然而这些方法一方面不一定能保证语义一致。所以考虑了在Embedding层<strong>隐式生成增强样本</strong>的方法。</p>
+<p><img src="/2021/08/27/concert/44.JPG" alt></p>
+<ul>
+<li><p><strong>对抗攻击（Adversarial Attack）</strong>：这一方法通过梯度反传生成对抗扰动，将该扰动加到原本的Embedding矩阵上，就能得到增强后的样本。由于生成对抗扰动需要梯度反传，因此这一数据增强方法仅适用于有监督训练的场景。</p>
+</li>
+<li><p><strong>打乱词序（Token Shuffling）</strong>：这一方法扰乱输入样本的词序。由于Transformer结构没有“位置”的概念，模型对Token位置的感知全靠Embedding中的Position Ids得到。因此在实现上，我们只需要将Position Ids进行Shuffle即可。</p>
+</li>
+<li><p><strong>裁剪（Cutoff）</strong></p>
+<p>：又可以进一步分为两种：</p>
+<ul>
+<li>Token Cutoff：随机选取Token，将对应Token的Embedding整行置为零。</li>
+<li>Feature Cutoff：随机选取Embedding的Feature，将选取的Feature维度整列置为零。</li>
+</ul>
+</li>
+<li><p><strong>Dropout</strong>：Embedding中的每一个元素都以一定概率置为零，与Cutoff不同的是，该方法并没有按行或者按列的约束。</p>
+</li>
+</ul>
+<h3 id="2-3-融合监督信号"><a href="#2-3-融合监督信号" class="headerlink" title="2.3 融合监督信号"></a>2.3 融合监督信号</h3><p>除了无监督训练以外，作者给出3种进一步融合监督信号的策略，以NLI任务为例：</p>
+<script type="math/tex; mode=display">
+f=Concat(r_1,r_2,|r_1-r_2|)
+\\\mathcal{L}_{ce}=CrossEntropy(Wf+b,y)</script><p><strong>Joint training (joint)</strong>:</p>
+<script type="math/tex; mode=display">
+\mathcal{L}_{joint}=\mathcal{L}_{ce}+\alpha\mathcal{L}_{con}\ \# on\ NLI
+\ dataset</script><p><strong>Supervised training then unsupervised transfer (sup-unsup)</strong>:</p>
+<p>first train the model with $\mathcal{L}_{ce}$on NLI dataset, then use $\mathcal{L}_{con}$to finetune it on the target dataset.</p>
+<p><strong>Joint training then unsupervised transfer (joint-unsup)</strong>:</p>
+<p>first train the model with the $\mathcal{L}_{joint}$on NLI dataset, then use $\mathcal{L}_{con }$to fine-tune it on the target dataset.</p>
+<h2 id="3-评价"><a href="#3-评价" class="headerlink" title="3.评价"></a>3.评价</h2><p>这里解答一个问题就是为什么用相关系数衡量STS（semantic textual similarity）任务。个人理解，因为对于STS任务，一般做法是将两个句子转成两个向量，然后用余弦相似度衡量两个向量的差异值为[0,1]，然而标签数据为5个档位，值分别为[0,1,2,3,4,5]。预测的余弦相似度和实际标签数据可以理解成两个随机变量，相关系数无非就是衡量两个随机变量的相关性。</p>
+<h2 id="4-定性分析"><a href="#4-定性分析" class="headerlink" title="4.定性分析"></a>4.定性分析</h2><p>后又发现BERT句向量表示的坍缩和句子中的高频词有关。具体来说，当通过平均词向量的方式计算句向量时，那些高频词的词向量将会主导句向量，使之难以体现其原本的语义。当计算句向量时去除若干高频词时，坍缩现象可以在一定程度上得到缓解（如图2蓝色曲线所示）。</p>
+<p><img src="/2021/08/27/concert/33.JPG" alt></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://tech.meituan.com/2021/06/03/acl-2021-consert-bert.html">https://tech.meituan.com/2021/06/03/acl-2021-consert-bert.html</a></p>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/ConSERT/">ConSERT</a></div><hr></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-08-26  <a class="commentCountImg" href="/2021/08/26/gpt/#comment-container"><span class="display-none-class">3521a71f5e83cbc0585d9ef84abedc3f</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="3521a71f5e83cbc0585d9ef84abedc3f">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>9 m  <i class="fas fa-pencil-alt"> </i>1.4 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/26/gpt/">gpt</a></h1><div class="content"><p>GPT三部曲宣告NLP的“预训练+微调”时代的崛起和走向辉煌。</p>
+<p>原文分别为：</p>
+<p>《Improving Language Understanding by Generative Pre-Training》</p>
+<p>《Language Models are Unsupervised Multitask Learners》</p>
+<p>《Language Models are Few-Shot Learners》</p>
+<h2 id="1-GPT1"><a href="#1-GPT1" class="headerlink" title="1.GPT1"></a>1.GPT1</h2><p><img src="/2021/08/26/gpt/aa.jpg" alt></p>
+<p><img src="/2021/08/26/gpt/aaa.png" alt="img"></p>
+<p>模型的整体结构如上图所示。使用过程过程分为两步：第一步预训练，利用大量语料学习得到high-capacity的语言模型；第二步是fine_tuning，利用标签数据使其拟合到特定任务。</p>
+<h3 id="1-1-Unsupervised-pre-training"><a href="#1-1-Unsupervised-pre-training" class="headerlink" title="1.1 Unsupervised pre-training"></a>1.1 Unsupervised pre-training</h3><p>作者将transformer decoder中Encoder-Decoder Attention层去掉后作为基本单元，然后多层堆叠作为语言模型的主体，然后将输出经过一个softmax层，来得到目标词的输出分布：</p>
+<script type="math/tex; mode=display">
+h_0=UW_e+W_p
+\\h_l=transformer\_block(h_{l-1}),\ \forall l \in [1,n]
+\\P(u|u_{-k},...,u_{-1})    =softmax(h_nW_e^T)\</script><p>其中$U=\{u_{-k},…,u_{-1}\}$ 是预测词$u $前$k$个token的独热编码序列，$n$是模型的层数，$W_e$是token embedding matrix，$W_p$是position embedding matrix。</p>
+<p>给定一个无监督的语料库$\mathcal{U}$，use a standard language modelingo bjective to maximize the following likelihood</p>
+<script type="math/tex; mode=display">
+L_1(\mathcal{U})=\sum_ilog P(u_i|u_{i-k},...,u_{i-1})</script><p>其中$k$ 是上下文窗口大小。</p>
+<h3 id="1-2-Supervised-fine-tuning"><a href="#1-2-Supervised-fine-tuning" class="headerlink" title="1.2 Supervised fine-tuning"></a>1.2 Supervised fine-tuning</h3><p>对于数据集$\mathcal{C}$，有数据$(x^1,x^2,…,x^m,y)$</p>
+<script type="math/tex; mode=display">
+P(y|x^1,x^2,...,x^m)=softmax(h_l^mW_y)
+\\L_2(\mathcal{C})=\sum_{(x,y)}log P(y|x^1,x^2,...,x^m)</script><p>其中$W_y$为全连接层的参数</p>
+<p>作者发现，使用语言模型来辅助监督学习进行微调，有两个好处：</p>
+<ol>
+<li>提高监督模型的泛化能力；</li>
+<li>加速收敛。</li>
+</ol>
+<p>所以，最终下游使用的监督模型损失函数为：</p>
+<script type="math/tex; mode=display">
+L_3(\mathcal{C})=L_2(\mathcal{C})+\lambda*L_1(\mathcal{C})</script><h3 id="1-3-Task-specific-input-transformations"><a href="#1-3-Task-specific-input-transformations" class="headerlink" title="1.3 Task-specific input transformations"></a>1.3 Task-specific input transformations</h3><p><img src="/2021/08/26/gpt/gpt1.JPG" alt></p>
+<p>所有的输入文本都会加上开始和结合token$(s),(e)$</p>
+<p><strong>分类</strong></p>
+<p>分类过程可如上1.2，输入表示为$[(s);Context;(e)]$</p>
+<p><strong>文本蕴含</strong></p>
+<p>将输入拼接成$[(s); premise; ($) ; hypothesis ; (e)]$</p>
+<p><strong>相似度</strong></p>
+<p>由于文本相似度与两个比较文本的前后顺序没有关系，因此将两种文本顺序都考虑进来，如上图所示</p>
+<p><strong>问答与常识推理</strong></p>
+<p>假设文档为$z$，问题为$q$，一系列答案为$\{a_k\}$，将其输入表示为$[(s); z; q; ($);  a_k;(e)]$，然后多个回答组合的形式，如上图。</p>
+<h2 id="2-GPT2"><a href="#2-GPT2" class="headerlink" title="2.GPT2"></a>2.GPT2</h2><p>总结就是：多任务预训练+超大数据集+超大规模模型。通过一个超大数据集涵盖NLP的大多任务，然后使用一个超大规模模型进行多任务预训练，使其无需任何下游任务的finetune就可以做到多个NLP任务的SOTA。举个例子，拿高考为例，人的智力和脑容量可以理解为参数大小，由于个体差异，可以将不同的学生理解为不同参数量的模型，卷子可以理解为数据集，不同的学科可以理解为不同任务。GPT2有点类似学霸，就是有超高的智力和脑容量，然后刷大量不同学科的题目，因此对高考这个多任务的下游任务就可以取得好成绩。</p>
+<p><strong>GPT2相对于GPT1有哪些不同呢？</strong></p>
+<ol>
+<li><p><strong>GPT2去掉了fine-tuning</strong>：不再针对不同任务分别进行微调建模，模型会自动识别出来需要做什么任务。这就好比一个人博览群书，你问他什么类型的问题，他都可以顺手拈来，GPT2就是这样一个博览群书的模型。</p>
+</li>
+<li><p><strong>超大数据集</strong>：WebText，该数据集做了一些简单的数据清理，并且实验结果表明目前模型仍然处于一个欠拟合的情况。</p>
+</li>
+<li><p><strong>增加网络参数</strong>：GPT2将Transformer堆叠的层数增加到48层，隐层的维度为1600，参数量更是达到了15亿。15亿什么概念呢，Bert的参数量也才只有3亿哦~当然，这样的参数量也不是说谁都能达到的，这也得取决于money的多少啊~</p>
+</li>
+<li><p><strong>调整transformer</strong>：将layer normalization放到每个sub-block之前，并在最后一个transformer后再增加一个layer normalization，如下图。</p>
+<p><img src="https://img-blog.csdnimg.cn/20201219031612555.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1MTI4OTI2,size_16,color_FFFFFF,t_70#pic_center" alt="GPT2与GPT模型结构对比"></p>
+</li>
+<li><p><strong>输入表示</strong>：GPT2采用了BPE这种subword的结构作为输入</p>
+</li>
+<li><p><strong>其他</strong>：GPT2将词汇表数量增加到50257个；最大的上下文大小 (context size) 从GPT的512提升到了1024 tokens；batchsize增加到512。</p>
+</li>
+</ol>
+<p><strong>GPT2的输入是完全的文本，什么提示都不加吗？</strong></p>
+<p>当然不是，它也会加入提示词，比如：$TL;DR:$，GPT2模型就会知道是做摘要工作了，输入的格式就是 $文本+TL;DR:$，然后就等待输出就行了~</p>
+<h2 id="3-GPT3"><a href="#3-GPT3" class="headerlink" title="3.GPT3"></a>3.GPT3</h2><p>GPT3，这是一种具有1750亿个参数的超大规模模型，比GPT2大100倍，感觉真是进入算力时代了。距离个人用户太远了，就不深挖了。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/146719974">https://zhuanlan.zhihu.com/p/146719974</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/125139937">https://zhuanlan.zhihu.com/p/125139937</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yifanrensheng/p/13167796.html#_label1_0">https://www.cnblogs.com/yifanrensheng/p/13167796.html#_label1_0</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/96c5d5d5c468">https://www.jianshu.com/p/96c5d5d5c468</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35128926/article/details/111399679">https://blog.csdn.net/qq_35128926/article/details/111399679</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/96791725">https://zhuanlan.zhihu.com/p/96791725</a></p>
+<p><a target="_blank" rel="noopener" href="https://terrifyzhao.github.io/2019/02/18/GPT2.0论文解读.html">https://terrifyzhao.github.io/2019/02/18/GPT2.0%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/56865533">https://zhuanlan.zhihu.com/p/56865533</a></p>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/gpt/">gpt</a></div><hr></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-08-23  <a class="commentCountImg" href="/2021/08/23/text-cnn/#comment-container"><span class="display-none-class">4e2b48a121bb0f97a9742bd9e3cf6e2c</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="4e2b48a121bb0f97a9742bd9e3cf6e2c">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>6 m  <i class="fas fa-pencil-alt"> </i>0.9 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/23/text-cnn/">TextCNN TextRNN TextRCNN</a></h1><div class="content"><p>原文分别为：</p>
+<p>《Convolutional Neural Networks for Sentence Classification》</p>
+<p>《Recurrent Neural Network for Text Classification with Multi-Task Learning》</p>
+<p>《Recurrent Convolutional Neural Networks for Text Classification》</p>
+<h2 id="1-TextCNN"><a href="#1-TextCNN" class="headerlink" title="1.TextCNN"></a>1.TextCNN</h2><p><img src="/2021/08/23/text-cnn/images\textcnn1.JPG" alt></p>
+<p>模型的整体结构如上所示。</p>
+<p>假设输入文本的长度为$n$，对于长度不够的需要做padding，任意一个单词可以用一个$k$维的向量表示，即$X_i \in \mathbb{R}^{k}$，那么一个句子可以表示为</p>
+<script type="math/tex; mode=display">
+X_{1:n}=X_1 \oplus X_2\oplus...\oplus X_n</script><p>其中$\oplus$是向量拼接操作，$X_{1:n} \in \mathbb{R}^{nk}$，对于某个滑窗$X_{i,i+h-1}=\{X_i,X_{i+1},…,X_{i+h-1}\}$经过某个卷积核$W_j$可得</p>
+<script type="math/tex; mode=display">
+c_{i,j}=f(W_j\cdot X_{i,i+h-1}+b)</script><p>其中$f=tanh(\cdot)$，$W\in \mathbb{R}^{k h}，c_{i,j} \in \mathbb{R}$</p>
+<p>假设卷积通道数为$m$，在NLP中，卷积滑动步伐$k=1$，那么经过卷积层后得到的完整的特征矩阵为</p>
+<script type="math/tex; mode=display">
+C=[[c_{1,1},c_{2,1},...,c_{n-h+1,1}]^T,[c_{1,2},c_{2,2},...,c_{n-h+1,2}]^T,...,[c_{1,m},c_{2,m},...,c_{n-h+1,m}]^T]</script><p>其中$C \in \mathbb{R}^{(n-h+1)\times m}$</p>
+<p>然后maxpooling，得到</p>
+<script type="math/tex; mode=display">
+\hat{C}=max\{C\} , \hat{C}\in \mathbb{R}^{m}</script><p>然后将$\hat{C}$接个全连接，就可以做分类或者回归任务了。</p>
+<h2 id="2-TextRNN"><a href="#2-TextRNN" class="headerlink" title="2.TextRNN"></a>2.TextRNN</h2><p><img src="/2021/08/23/text-cnn/images\textrnn.JPG" alt></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/42741-ac1eb618f37a9dea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="img"></p>
+<p>该文的场景为Recurrent Neural Network for Text Classification with Multi-Task Learning，就是论文的题目。文中给出了三种结构，如上图所示，图中的RNN单元为LSTM。</p>
+<p><strong>Model-I: Uniform-Layer Architecture</strong></p>
+<p>对于任务$m$，输入$\hat X_t$包含两个部分</p>
+<script type="math/tex; mode=display">
+\hat{X}_t^{(m)}=X_{t}^{(m)}\oplus X_{t}^{(s)}</script><p>其中$X_{t}^{(m)}$表示特定任务的词向量，$X_{t}^{(s)}$表示共享的词向量，$\oplus$表示向量拼接的操作。</p>
+<p><strong>Model-II: Coupled-Layer Architecture</strong></p>
+<script type="math/tex; mode=display">
+\hat{c}_t=tanh(W_cX_t+U_ch_{t-1}) \ \#原来
+\\\downarrow
+
+\\\hat{c}_t^{(m)}=tanh(W_c^{(m)}X_t+\sum_{i\in\{m,n\}}g^{(i\longrightarrow m)}U_c^{(i\longrightarrow m)}h_{t-1}^{(i)}) \ \#现在
+\\g^{(i\longrightarrow m)}=\sigma(W_{g}^{(m)}x_t+U_g^{(i)}h_{t-1}^{(i)})</script><p><strong>Model-III: Shared-Layer Architecture</strong></p>
+<script type="math/tex; mode=display">
+\hat{c}_t=tanh(W_cX_t+U_ch_{t-1}) \ \#原来
+\\\downarrow
+
+\\\hat{c}_t^{(m)}=tanh(W_c^{(m)}X_t+g^{(m)}U_c^{(m)}h_{t-1}^{(m)}+g^{(s\longrightarrow m)}U_c^{(s)}h_{t}^{(s)} \ \#现在
+\\g^{( m)}=\sigma(W_{g}^{(m)}x_t+U_g^{(m)}h_{t-1}^{(m)}),
+g^{( s\longrightarrow m)}=\sigma(W_{g}^{(m)}x_t+U_g^{(s\longrightarrow m)}h_{t}^{(s)}),
+h_t^{(s)}=\overrightarrow{h_t^{(s)}}\oplus\overleftarrow{h_t^{(s)}}</script><h2 id="3-TextRCNN"><a href="#3-TextRCNN" class="headerlink" title="3.TextRCNN"></a>3.TextRCNN</h2><p><img src="/2021/08/23/text-cnn/images\textrcnn1.JPG" alt></p>
+<p>整体结构如上图所示，解释一下为啥叫RCNN，一般的 CNN 网络，都是卷积层 + 池化层，这里是将卷积层换成了双向 RNN，所以结果是，双向 RNN + 池化层。作者原话为：From the perspective of convolutional neural networks, the recurrent structure we previously mentioned is the convolutional layer.</p>
+<p><strong>词语表示</strong></p>
+<p>对于一个词语$w_i$，可以用一个三元组表示为</p>
+<script type="math/tex; mode=display">
+x_i=[c_l(w_i);e(w_i);c_r(w_i)]</script><p>其中$e(w_i)$表示$w_i$的词向量，$c_l(w_i)$表示$w_i$句子左边的内容的向量表示，$c_r(w_i)$表示$w_i$句子右边的内容的向量表示，用式子表示如下</p>
+<script type="math/tex; mode=display">
+c_l(w_i)=f(W^{l}c_l(w_{i-1})+W^{(sl)}e(w_{i-1}))
+\\c_r(w_i)=f(W^{r}c_r(w_{i-1})+W^{(sr)}e(w_{i-1}))</script><p>然后将$x_i$经过全连接得到$y_i^{(2)}$，$y_i^{(2)}$is a latent semantic vector</p>
+<script type="math/tex; mode=display">
+y_i^{(2)}=tanh(W^{(2)}x_i+b^{(2)})</script><p><strong>语句表示</strong></p>
+<p>获取众多的词语表示后，通过max-pooling得到句子表示</p>
+<script type="math/tex; mode=display">
+y^{(3)}=\mathop{\max}_{i=1}^{n}y_i^{(2)}</script><p>然后接全连接和softmax</p>
+<script type="math/tex; mode=display">
+y^{(4)}=W^{(4)}y^{(3)}+b^{(4)}
+\\p=softmax(y^{(4)})</script><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wangduo/p/6773601.html">https://www.cnblogs.com/wangduo/p/6773601.html</a></p>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/TextCNN-TextRNN-TextRCNN/">TextCNN TextRNN TextRCNN</a></div><hr></div></article></div><!--!--><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-08-19  <a class="commentCountImg" href="/2021/08/19/elmo/#comment-container"><span class="display-none-class">0c9b0086f0310ef439a36d4a03dea104</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="0c9b0086f0310ef439a36d4a03dea104">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>6 m  <i class="fas fa-pencil-alt"> </i>0.9 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/19/elmo/">ELMo</a></h1><div class="content"><h2 id="1-摘要"><a href="#1-摘要" class="headerlink" title="1.摘要"></a>1.摘要</h2><p>引入了新的深度考虑上下文的词语表示，模型考虑了两个方面：（1）词语的复杂特性，包括语法和语义，（2）在语境中的不同含义。模型使用了深度双向语言模型，并且在大预料库上做了预训练。这个模型可以很方便地和现有的模型结合，并且在NLP的6个任务上取得了SOTA。作者还揭露了预训练网络的深层构件是关键，这使得下游模型能够混合不同类型的半监督信号。</p>
+<h2 id="2-模型原理"><a href="#2-模型原理" class="headerlink" title="2.模型原理"></a>2.模型原理</h2><p><img src="/2021/08/19/elmo/images\elmo1.JPG" alt></p>
+<p>模型的整体机构如上所示，由左右两个单向的多层LSTM网络构成，左边为正向，右边为反向。</p>
+<h3 id="2-1-双向语言模型（预训练模型）"><a href="#2-1-双向语言模型（预训练模型）" class="headerlink" title="2.1 双向语言模型（预训练模型）"></a>2.1 双向语言模型（预训练模型）</h3><p>假定一个句子有$N$个token，分别为$(t_1,t_2,…,t_N)$，正向的语言模型的句子概率为：</p>
+<script type="math/tex; mode=display">
+p(t_1,t_2,...,t_N)=\prod_{k=1}^{N}p(t_k|t_1,t_2,...,t_{k-1})</script><p>反向的语言模型的句子概率为：</p>
+<script type="math/tex; mode=display">
+p(t_1,t_2,...,t_N)=\prod_{k=1}^{N}p(t_k|t_{k+1},t_{k+2},...,t_{N})</script><p>得到正向和反向的语言后，将其结合可以得到双向的语言模型，目标函数就是取这两个方向语言模型的最大似然，这里取对数表示为：</p>
+<script type="math/tex; mode=display">
+\sum_{k=1}^N(log\ p(t_k|t_1,t_2,...,t_{k-1};\Theta_x,\overrightarrow{\Theta}_{LSTM} ,\Theta_s )+log \ p(t_k|t_{k+1},t_{k+2},...,t_{N};\Theta_x,\overleftarrow{\Theta}_{LSTM} ,\Theta_s) )\\</script><p>其中$\Theta_x$为token表示的参数，$\Theta_s$为softmax层的参数，$\overrightarrow{\Theta}_{LSTM}$表示前向语言模型的参数，$\overleftarrow{\Theta}_{LSTM}$表示反向语言模型的参数。</p>
+<h3 id="2-2-ELMo向量（如何表示词向量）"><a href="#2-2-ELMo向量（如何表示词向量）" class="headerlink" title="2.2 ELMo向量（如何表示词向量）"></a>2.2 ELMo向量（如何表示词向量）</h3><p>得到$L$层的预训练双向深度语言模型后，对于token $t_k$，一共包含了$2L+1$个相关的表示，集合如下</p>
+<script type="math/tex; mode=display">
+R_k=\{x_{k}^{LM},\overrightarrow{h^{LM}_{k,j}},\overleftarrow{h^{LM}_{k,j}}|j=1,2,...,L \}\\=\{h_{k,j}^{LM} | j=0,...,L\}</script><p>注意$h_{k,0}^{LM}=x_{k}^{LM}，h_{k,j}^{LM}=[\overrightarrow{h^{LM}_{k,j}};\overleftarrow{h^{LM}_{k,j}}]$,其中$x_{k}^{LM}$为token表示，$\overrightarrow{h^{LM}_{k,j}},\overleftarrow{h^{LM}_{k,j}}$分别为正反向语言模型的表示</p>
+<p>对于下游任务，需要将$2L+1$个表示压缩到一个向量$ELmo_k^{task}$，最简单的做法是只取顶层的表示，即</p>
+<script type="math/tex; mode=display">
+ELmo_k^{task}=E(R_k)=h_{k,L}^{LM}</script><p>更加通用的做法为线形组合输出，如下图，公式表达为</p>
+<script type="math/tex; mode=display">
+ELmo_k^{task}=E(R_k,\Theta^{task})=\gamma^{task}\sum_{j=0}^{L}s_{j}^{task}h_{k,j}^{LM}</script><p>其中$\gamma^{task}$用于缩放向量，$s_{j}^{task}$表示权重，通过下游任务学习。</p>
+<p><img src="https://pic1.zhimg.com/v2-a4b3bd883f2d940737971c75c48bae31_1440w.jpg?source=172ae18b" alt="词嵌入：ELMo原理"></p>
+<h3 id="2-3-ELMo向量与具体NLP任务的结合（如何fine-tune）"><a href="#2-3-ELMo向量与具体NLP任务的结合（如何fine-tune）" class="headerlink" title="2.3 ELMo向量与具体NLP任务的结合（如何fine_tune）"></a>2.3 ELMo向量与具体NLP任务的结合（如何fine_tune）</h3><p>对于下游任务模型，可以得到不考虑上下文的静态词向量$x_k$和考虑上下文的向量表示$h_k$</p>
+<p>对于一部分任务，将$x_k$和$ ELMo_k^{task}$ 拼接作为下游任务的特征：$[x_k;ELMo_k^{task}]$</p>
+<p>对于一部分任务，将 $h_k$和 $ ELMo_k^{task}$ 拼接可提升效果：$[h_k;ELMo_k^{task}]$</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/linchuhai/article/details/97170541">https://blog.csdn.net/linchuhai/article/details/97170541</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63115885">https://zhuanlan.zhihu.com/p/63115885</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/88993965">https://zhuanlan.zhihu.com/p/88993965</a></p>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/ELMo/">ELMo</a></div><hr></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-08-18  <a class="commentCountImg" href="/2021/08/18/dssm/#comment-container"><span class="display-none-class">570287b2ff5e99b7d97bfc663dbb86fb</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="570287b2ff5e99b7d97bfc663dbb86fb">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>10 m  <i class="fas fa-pencil-alt"> </i>1.6 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/18/dssm/">DSSM双塔模型系列</a></h1><div class="content"><p>简单介绍微软出品的DSSM,CNN-DSSM,LSTM-DSSM</p>
+<p>原文分别为：</p>
+<p>《Learning Deep Structured Semantic Models for Web Search using Clickthrough Data》</p>
+<p>《A Latent Semantic Model with Convolutional-Pooling Structure for Information Retrieval》《SEMANTIC MODELLING WITH LONG-SHORT-TERM MEMORY FOR INFORMATION RETRIEVAL》</p>
+<h2 id="一-DSSM"><a href="#一-DSSM" class="headerlink" title="一.DSSM"></a>一.DSSM</h2><h3 id="1-1-word-hashing"><a href="#1-1-word-hashing" class="headerlink" title="1.1 word hashing"></a>1.1 word hashing</h3><p>$x$为输入的词向量，这里使用词袋模型表示词向量，因此词向量的维度取决于词的数量，所以词向量维度非常大。词向量维度非常大不利于后面网络的计算，因此需要先对$x$做降维，作者提出了word hashing 的方法来实现。word hashing分两步，首先给词语添加开始和结束的标记，然后做n分割。</p>
+<p>举个例子，比如n=3，假定词语为“boy”，添加开始和结束的标记后为“#boy#“，然后3分隔为”#-b-o, b-o-y, o-y-#“，然后使用这样一个组合来表示原词，如下所示。</p>
+<p><img src="/2021/08/18/dssm/images\cnn_dssm4.JPG" alt></p>
+<p>这么表示的好处可以缓解OOV问题，缺点为是否存在不同词使用相同的组合表示。关于这个缺点作者做了实验，结果如下。</p>
+<p><img src="/2021/08/18/dssm/images\dssm2.JPG" alt></p>
+<p>对于词汇数量500K大小的词表，采用3-gram后token的尺寸大约30k，而且存在重复表示的仅为22个。重复表示率为0.0044%，维度压缩到原来6%，可以说非常有效。</p>
+<h3 id="1-2-模型整体结构"><a href="#1-2-模型整体结构" class="headerlink" title="1.2 模型整体结构"></a>1.2 模型整体结构</h3><p><img src="/2021/08/18/dssm/images\dssm1.JPG" alt></p>
+<p>模型的整体结构如上图所示，$Q$为query，$D_i$为文档。</p>
+<p>文本首先表示为词袋表示$x$，然后经过word hashing的压缩得到</p>
+<script type="math/tex; mode=display">
+l_1=W_1x</script><p>然后为多层的非线性映射，每层都为全连接网络，得到</p>
+<script type="math/tex; mode=display">
+l_i=f(W_il_{i-1}+b_{i}),i=2,...,N-1\\</script><p>非线性映射层的最后一层得到语义特征$y$为</p>
+<script type="math/tex; mode=display">
+y=f(W_Nl_{N-1}+b_N)\\
+f(x)=tanh(x)=\frac{1-e^{-2x}}{1+e^{-2x}}</script><p>利用余弦相似度衡量$Q$和$D$相似度得到</p>
+<script type="math/tex; mode=display">
+R(Q,D)=cosine(y_Q,y_D)=\frac{y_Q^Ty_D}{||y_Q||||y_D||}</script><p>最后的概率输出为</p>
+<script type="math/tex; mode=display">
+P(D|Q)=\frac{e^{\gamma R(Q,D)}}{\sum_{D^{'}\in \textbf{D}}e^{\gamma R(Q,D^{'})}}</script><p>其中$\gamma$为smoothing factor。</p>
+<h3 id="1-3-训练"><a href="#1-3-训练" class="headerlink" title="1.3 训练"></a>1.3 训练</h3><p>样本集构造，对每个正样本$(Q,D^+)$，搭配4个随机负样本$(Q,D_j^-;j=1,..,4)$</p>
+<p>损失函数为：</p>
+<script type="math/tex; mode=display">
+L(\wedge)=-log \prod \limits_{(Q,D^+)}P(D^+|Q)</script><p>其中$\wedge$为模型参数。</p>
+<h2 id="二-CNN-DSSM"><a href="#二-CNN-DSSM" class="headerlink" title="二.CNN-DSSM"></a>二.CNN-DSSM</h2><h3 id="2-1-CLSM结构"><a href="#2-1-CLSM结构" class="headerlink" title="2.1 CLSM结构"></a>2.1 CLSM结构</h3><p><img src="/2021/08/18/dssm/images\cnn_dssm1.JPG" alt></p>
+<p>模型包括几个部分：(1) a word-n-gram layer obtained by running a contextual sliding window over the input word sequence (2) a letter-trigram layer that transforms each word-trigram into a letter-trigram representation vector (3) a convolutional layer that extracts contextual features for each word with its neighboring words defined by a window (4) a max-pooling layer that discovers and combines salient word-n-gram features to form a fixed-length sentence-level feature vector  (5) a semantic layer that extracts a high-level semantic feature vector for the input word sequence.本章以下部分围绕这5个内容展开。</p>
+<h3 id="2-2-Letter-trigram-based-Word-n-gram-Representation"><a href="#2-2-Letter-trigram-based-Word-n-gram-Representation" class="headerlink" title="2.2 Letter-trigram based Word-n-gram Representation"></a>2.2 Letter-trigram based Word-n-gram Representation</h3><p>在DSSM的Letter-trigram的基础上加了Word-n-gram，Word-n-gram就是对原始输入文本做滑窗，对于第$t$个word-n-gram可以表示为：</p>
+<script type="math/tex; mode=display">
+l_t=[f^T_{t-d},...,f^T_{t},...,f^T_{t+d}]^T,\ t=1,2,...,T</script><p>其中$n=2d+1,f_t$为的第$t$个词语的letter-trigram，$T$为输入文本长度。一个letter-trigram的维度为$30K$，那么一个word-n-gram维度为$n\times30K$</p>
+<p>举个例子，如上图，输入文本为$(s) \ online \ auto\ body \ (s)$，滑动窗口大小为n=3，可得$(s)\ online \ auto，\ online \ auto  \ body ，auto\  body \ (s)  $，那么“</p>
+<p>$l_1=[f^T((s)),f^T(online ),f^T(auto)]^T,\\l_2=[f^T(online ),f^T(auto),f^T(body)]^T,\\l_3=[f^T(auto),f^T(body),f^T((s))]^T$</p>
+<h3 id="2-3-Modeling-Word-n-gram-Level-Contextual-Features-at-the-Convolutional-Layer"><a href="#2-3-Modeling-Word-n-gram-Level-Contextual-Features-at-the-Convolutional-Layer" class="headerlink" title="2.3 Modeling Word-n-gram-Level Contextual Features at the Convolutional Layer"></a>2.3 Modeling Word-n-gram-Level Contextual Features at the Convolutional Layer</h3><p>语境相关特征向量$h_t$可以表示为：</p>
+<script type="math/tex; mode=display">
+h_t=tanh(W_c\cdot l_t),\ t=1,...,T</script><p>其中$W_c$为特征转换矩阵，也就是卷积矩阵，对于全部的word n-grams，$W_c$共享。有小伙伴肯定好奇，这不就是全连接吗，和卷积什么关系，传统的CV卷积会滑窗啊，关于这点，滑窗操作3.2已经做过了，就联系起来了。</p>
+<p>对于不同三元组的$h$，作者使用余弦相似度计算他们的相似度是否符合语义习惯。如下所示，左边一列全部含有”office”，其中与软件相关的三元组和”microsoft office software“相似度较高，与工作地方相关的三元组和”microsoft office software“相似度较低。对于右边一列有类似特征。</p>
+<p><img src="/2021/08/18/dssm/images\cnn_dssm2.JPG" alt></p>
+<h3 id="2-4-Modeling-Sentence-Level-Semantic-Features-Using-Max-Pooling"><a href="#2-4-Modeling-Sentence-Level-Semantic-Features-Using-Max-Pooling" class="headerlink" title="2.4 Modeling Sentence-Level Semantic Features Using Max Pooling"></a>2.4 Modeling Sentence-Level Semantic Features Using Max Pooling</h3><p>获取局部的语境相关的特征向量后，我们需要把它们合在一起组合句子级别的特征向量。由于语句中某些词语不重要，我们可以忽略它，保留重要的词语信息。为了达到这个目的，使用了max pooling，用式子描述如下</p>
+<script type="math/tex; mode=display">
+v(i)= \mathop{\max}_{t=1,..,T} \{h_t(i)\},\ i=1,...,K</script><p>其中$v(i)$表示池化层输出$v$的第$i$个元素，$K$为$v$的维度和$h_t$的维度一样，$h_t(i)$是第$t$个局部语境特征向量的第$i$个元素，举个例子如下。</p>
+<p><img src="/2021/08/18/dssm/images\cnn_dssm3.JPG" alt></p>
+<h3 id="2-5-Latent-Semantic-Vector-Representations"><a href="#2-5-Latent-Semantic-Vector-Representations" class="headerlink" title="2.5 Latent Semantic Vector Representations"></a>2.5 Latent Semantic Vector Representations</h3><p>语义向量表示$y$，用公式描述如下</p>
+<script type="math/tex; mode=display">
+y=tanh(W_s\cdot v)</script><h3 id="2-6-Using-the-CLSM-for-IR"><a href="#2-6-Using-the-CLSM-for-IR" class="headerlink" title="2.6 Using the CLSM for IR"></a>2.6 Using the CLSM for IR</h3><p>和DSSM都一样，</p>
+<script type="math/tex; mode=display">
+R(Q,D)=cosine(y_Q,y_D)=\frac{y_Q^Ty_D}{||y_Q||||y_D||}
+\\P(D|Q)=\frac{e^{\gamma R(Q,D)}}{\sum_{D^{'}\in \textbf{D}}e^{\gamma R(Q,D^{'})}}</script><h3 id="2-7-损失函数"><a href="#2-7-损失函数" class="headerlink" title="2.7 损失函数"></a>2.7 损失函数</h3><script type="math/tex; mode=display">
+L(\wedge)=-log \prod \limits_{(Q,D^+)}P(D^+|Q)</script><h2 id="三-LSTM-DSSM"><a href="#三-LSTM-DSSM" class="headerlink" title="三.LSTM-DSSM"></a>三.LSTM-DSSM</h2><p>cnn-dssm只能捕获局部的文本信息，lstm对于序列的信息捕获能力强于lstm，因此使用lstm改进dssm。</p>
+<h3 id="3-1-模型结构"><a href="#3-1-模型结构" class="headerlink" title="3.1 模型结构"></a>3.1 模型结构</h3><p>整体结构如下图，注意红色的部分为残差传递的方向。</p>
+<p><img src="/2021/08/18/dssm/images\lstm_dssm1.JPG" alt></p>
+<p>图中的LSTM单元是LSTM的变种，加入了<strong>peep hole</strong>的 LSTM，具体结构如下。</p>
+<p><img src="/2021/08/18/dssm/images\lstm_dssm2.JPG" alt></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/guoyaohua/p/9229190.html">https://www.cnblogs.com/guoyaohua/p/9229190.html</a></p>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/DSSM/">DSSM</a></div><hr></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-08-10  <a class="commentCountImg" href="/2021/08/10/ptm-survey/#comment-container"><span class="display-none-class">fa4f8744578ff1a660a64a4ac67da7c2</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="fa4f8744578ff1a660a64a4ac67da7c2">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>16 m  <i class="fas fa-pencil-alt"> </i>2.4 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/10/ptm-survey/">Pre-trained Models for Natural Language Processing A Survey</a></h1><div class="content"><p>原文内容很丰富，慢慢学习更新。</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>这篇综述从language representation learning入手，然后全面的阐述Pre-trained Models的原理，结构以及downstream任务，最后还罗列了PTM的未来发展方向。该综述目的旨在为NLP小白，PTM小白做引路人，感人。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><p>随着深度学习的发展，许多深度学习技术被应用在NLP，比如CNN，RNN，GNN以及attention。</p>
+<p>尽管NLP任务的取得很大成功，但是和CV比较，性能提高可能不是非常明显。这主要是因为NLP任务的数据集都非常小（除了机器翻译），然而深度网络参数非常多，没有足够的数据支撑网络训练会导致过拟合问题。</p>
+<p>最近，大量工作表明，预先训练的模型（PTMs），在大型语料库上可以学习通用语言表示，这有利于下游NLP任务可以避免从零开始训练新模型。随着算力的发展，深度模型（例如，transformer）的出现和训练技巧的不断调高，PTM的结构从浅层发展成深层。<strong>第一代PTM</strong>被用于Non-contextual  word Embedding。由于下游任务不需要这些模型本身，只需要训练好的词向量矩阵，因此对于现在的算力，这些模型非常浅层，比如Skip-Gram和GloVe。虽然这些预训练词向量可以捕获词语的语义，但它们不受上下文限制，无法捕获上下文中的高级含义，某些任务会失效，例如多义词，句法结构，语义角色、回指。<strong>第二代PTM</strong>关注Contextual word embeddings，比如BERT，GPT等。这些编码器任然需要通过下游任务在上下文中表示词语。</p>
+<h2 id="2-Background"><a href="#2-Background" class="headerlink" title="2.Background"></a>2.Background</h2><h3 id="2-1-Language-Representation-Learning"><a href="#2-1-Language-Representation-Learning" class="headerlink" title="2.1 Language Representation Learning"></a>2.1 Language Representation Learning</h3><p>The core idea of distributed representation is to describe the meaning of a piece of text by low-dimensional real-valued vectors. And each dimension of the vector has no corresponding sense, while the whole represents a concrete concept.</p>
+<p><img src="/2021/08/10/ptm-survey/images\ptm1.JPG" alt></p>
+<p>如上图所示，word embedding分为两种，一个是non-contextual embeddings，另外一个是contextual embeddings。这二者的主要区别在于词向量是否会随着语境的改变而动态变化。</p>
+<p><strong>Non-contextual Embeddings</strong></p>
+<p>这一步主要是将分割的字符（字符分隔在分词过程完成的），比如图中的$x$，变成向量表达$\textbf{e}_x \in \mathbb{R}^{D_e}$，$D_e$是词向量维度。向量化过程就是基于一个离线训练的词向量矩阵$\textbf{E}\in \mathbb{R}^{D_e\times |\mathcal{V}|} $做查找，$\mathcal{V}$是词汇表。</p>
+<p>这个过程主要有两个问题。第一个是这个词向量是静态的，没有考虑上下文含义，无法处理多义词。第二个是oov问题，许多算法可以缓解这个问题，比如基于character level，比如基于subword，subword算法有BPE，CharCNN等。</p>
+<p><strong>Contextual Embeddings</strong></p>
+<p>为了解决上面的问题，需要辨别词语在不同语境的语义。</p>
+<script type="math/tex; mode=display">
+[\textbf{h}_1,\textbf{h}_2,...,\textbf{h}_T]=f_{enc}(x_1,x_2,...,x_T)</script><p>其中$f_{enc}(\cdot)$为深度编码器。$\textbf{h}_t$就是contextual embedding或者dynamical embedding。</p>
+<h3 id="2-2-Neural-Contextual-Encoders"><a href="#2-2-Neural-Contextual-Encoders" class="headerlink" title="2.2 Neural Contextual Encoders"></a>2.2 Neural Contextual Encoders</h3><p><img src="/2021/08/10/ptm-survey/images\ptm3.JPG" alt></p>
+<p>可以分成两类，sequence models and non-sequence models。</p>
+<h4 id="2-2-1-sequence-models"><a href="#2-2-1-sequence-models" class="headerlink" title="2.2.1 sequence models"></a>2.2.1 sequence models</h4><p>分为两类，Convolutional Models和Recurrent Models，见上图。</p>
+<p><strong>Convolutional</strong> </p>
+<p>Convolutional models take the embeddings of words in the input sentence and capture the meaning of a word by aggregating the local information from its neighbors by convolution operations</p>
+<p><strong>Recurrent</strong> </p>
+<p>Recurrent models capture the contextual representations of words with short memory, such as <strong>LSTMs</strong> and <strong>GRUs</strong> . In practice, <strong>bi-directional</strong> LSTMs or GRUs are used to collect information from both sides of a word, but its performance is often affected by the <strong>long-term dependency problem</strong>.</p>
+<h4 id="2-2-2-non-sequence-models"><a href="#2-2-2-non-sequence-models" class="headerlink" title="2.2.2 non-sequence models"></a>2.2.2 non-sequence models</h4><p>model the relation of <strong>every two words</strong> </p>
+<p>Fully-Connected Self-Attention Model：这里指的是transformer。</p>
+<h4 id="2-2-3-Analysis"><a href="#2-2-3-Analysis" class="headerlink" title="2.2.3 Analysis"></a>2.2.3 Analysis</h4><p><strong>Sequence models：</strong></p>
+<p>1.Sequence models learn the contextual representation of the word with locality bias and are hard to capture the long-range interactions between words. </p>
+<p>2.Nevertheless, sequence models are usually easy to train and get good results for various NLP<br>tasks.</p>
+<p><strong>fully-connected self-attention model：</strong></p>
+<p>1.can directly model the dependency between every two words in a sequence, which is more powerful and suitable to model long range dependency of language</p>
+<p>2.However, due to its heavy structure and less model bias, the Transformer usually requires a large training corpus and is easy to overfit on small or modestly-sized datasets</p>
+<p>经过上述优劣分析，最后<strong>结论</strong>为the Transformer has become the mainstream architecture of PTMs due to its powerful capacity.</p>
+<h3 id="2-3-Why-Pre-training"><a href="#2-3-Why-Pre-training" class="headerlink" title="2.3 Why Pre-training?"></a>2.3 Why Pre-training?</h3><ol>
+<li>Pre-training on the huge text corpus can <strong>learn universal language representation</strong>s and help with the downstream tasks.</li>
+<li>Pre-training provides a <strong>better model initialization</strong>,which usually leads to a better generalization performance and speeds up convergence on the target task.</li>
+<li>Pre-training can be <strong>regarded as a kind of regularization</strong> to avoid overfitting on small data</li>
+</ol>
+<h2 id="3-Overview-of-PTMs"><a href="#3-Overview-of-PTMs" class="headerlink" title="3 Overview of PTMs"></a>3 Overview of PTMs</h2><p>The major differences between PTMs are the usages of contextual encoders, pre-training tasks, and purposes.</p>
+<h3 id="3-1-Pre-training-Tasks"><a href="#3-1-Pre-training-Tasks" class="headerlink" title="3.1 Pre-training Tasks"></a>3.1 Pre-training Tasks</h3><p>预训练任务对于学习通用语言表示至关重要。通常，这些预训练任务应具有挑战性，并拥有大量训练数据。在本节中，我们将预训练任务分成三个类别：Supervised learning、Unsupervised learning和Self-Supervised learning。</p>
+<p>Self-Supervised learning： SSL是监督和无监督的集合。自监督学习主要是利用辅助任务（pretext）从大规模的无监督数据中挖掘自身的监督信息，通过这种构造的监督信息对网络进行训练，从而可以学习到对下游任务有价值的表征。训练范式和监督学习一样，区别在于标签是基于无监督数据自动产生的。举个例子，masked language model。</p>
+<p>接下来基于介绍常用的基于Self-Supervised learning的预训练任务。</p>
+<p>3.1.1 Language Modeling (LM)</p>
+<p>3.1.2 Masked Language Modeling (MLM)</p>
+<p>3.1.3 Permuted Language Modeling (PLM)</p>
+<p>3.1.4 Denoising Autoencoder (DAE)</p>
+<p>3.1.5 Contrastive Learning (CTL)</p>
+<p>3.1.6 Others</p>
+<h3 id="3-2-Taxonomy-of-PTMs"><a href="#3-2-Taxonomy-of-PTMs" class="headerlink" title="3.2 Taxonomy of PTMs"></a>3.2 Taxonomy of PTMs</h3><p><img src="/2021/08/10/ptm-survey/images\ptm5.JPG" alt></p>
+<p>作者从以下四个角度，即Representation Type，Architectures，Pre-Training Task Types，Extensions，对现有的PTM分类，分类结果如上。图和这里有一点不统一，是作者没注意？图里有5个类别，多了Tuning Strategies，而且Representation Type在图中为Contextual?。</p>
+<h3 id="3-3-Model-Analysis"><a href="#3-3-Model-Analysis" class="headerlink" title="3.3 Model Analysis"></a>3.3 Model Analysis</h3><p>PTM到底学到了什么知识？许多研究表明有两方面的知识，linguistic knowledge和world knowledge存储在PTM。</p>
+<h2 id="4-Extensions-of-PTMs"><a href="#4-Extensions-of-PTMs" class="headerlink" title="4 Extensions of PTMs"></a>4 Extensions of PTMs</h2><h3 id="4-1-Knowledge-Enriched-PTMs"><a href="#4-1-Knowledge-Enriched-PTMs" class="headerlink" title="4.1 Knowledge-Enriched PTMs"></a>4.1 Knowledge-Enriched PTMs</h3><p>PTM一般从用于通用目的大量语料学习通用的语言表示。从外部知识库学习专业知识对PTM是非常有效的。外部知识可以是语言学，语义，常识，事实以及特定领域的知识。</p>
+<p>On the one hand, external knowledge can be injected during pre-training.</p>
+<p> On the other hand, one can incorporate external knowledge into pre-trained models without retraining them from scratch</p>
+<h3 id="4-2-Multilingual-and-Language-Specific-PTMs"><a href="#4-2-Multilingual-and-Language-Specific-PTMs" class="headerlink" title="4.2 Multilingual and Language-Specific PTMs"></a>4.2 Multilingual and Language-Specific PTMs</h3><h3 id="4-3-Multi-Modal-PTMs"><a href="#4-3-Multi-Modal-PTMs" class="headerlink" title="4.3 Multi-Modal PTMs"></a>4.3 Multi-Modal PTMs</h3><h3 id="4-4-Domain-Specific-and-Task-Specific-PTMs"><a href="#4-4-Domain-Specific-and-Task-Specific-PTMs" class="headerlink" title="4.4 Domain-Specific and Task-Specific PTMs"></a>4.4 Domain-Specific and Task-Specific PTMs</h3><h3 id="4-5-Model-Compression"><a href="#4-5-Model-Compression" class="headerlink" title="4.5 Model Compression"></a>4.5 Model Compression</h3><h2 id="5-Adapting-PTMs-to-Downstream-Tasks"><a href="#5-Adapting-PTMs-to-Downstream-Tasks" class="headerlink" title="5 Adapting PTMs to Downstream Tasks"></a>5 Adapting PTMs to Downstream Tasks</h2><p>虽然PTM学习了很多通用知识，但是如何将这些知识有效应用到下游任务是个挑战。</p>
+<h3 id="5-1-Transfer-Learning"><a href="#5-1-Transfer-Learning" class="headerlink" title="5.1 Transfer Learning"></a>5.1 Transfer Learning</h3><p>Transfer learningis to adapt the knowledge from a source task (or domain) to a target task (or domain).如下图。</p>
+<p><img src="/2021/08/10/ptm-survey/images\ptm6.JPG" alt></p>
+<h3 id="5-2-How-to-Transfer"><a href="#5-2-How-to-Transfer" class="headerlink" title="5.2 How to Transfer?"></a>5.2 How to Transfer?</h3><h4 id="5-2-1-Choosing-appropriate-pre-training-task-model-architecture-and-corpus"><a href="#5-2-1-Choosing-appropriate-pre-training-task-model-architecture-and-corpus" class="headerlink" title="5.2.1 Choosing appropriate pre-training task, model architecture and corpus"></a>5.2.1 Choosing appropriate pre-training task, model architecture and corpus</h4><h4 id="5-2-2-Choosing-appropriate-layers"><a href="#5-2-2-Choosing-appropriate-layers" class="headerlink" title="5.2.2 Choosing appropriate layers"></a>5.2.2 Choosing appropriate layers</h4><p>对于深度模型的不同层，捕获的知识是不同的，比如说词性标注，句法分析，长期依赖，语义角色，协同引用。对于RNN based的模型，研究表明多层的LSTM编码器的不同层对于不同任务的表现不一样。对于transformer based 的模型，基本的句法理解在网络的浅层出现，然而高级的语义理解在深层出现。</p>
+<p>用$\textbf{H}^{l}(1&lt;=l&lt;=L)$表示PTM的第$l$层的representation，$g(\cdot)$为特定的任务模型。有以下几种方法选择representation:</p>
+<p><strong>a) Embedding Only</strong></p>
+<p>choose only the pre-trained static embeddings,</p>
+<p><strong>b) Top Layer</strong></p>
+<p>选择顶层的representation，然后接入特定的任务模型，即$g(\textbf{H}^{L})$</p>
+<p><strong>c) All Layers</strong></p>
+<p>输入全部层的representation，让模型自动选择最合适的层次，然后接入特定的任务模型，比如ELMo，式子如下</p>
+<script type="math/tex; mode=display">
+g(\textbf{r}_t)=g(\gamma \sum_{l=1}^{L}\alpha_l\textbf{h}_t^{(l)})</script><p>其中$\alpha$ is the softmax-normalized weight for layer $l$ and $\gamma$ is a scalar to scale the vectors output by pre-trained model</p>
+<h4 id="5-2-3-To-tune-or-not-to-tune"><a href="#5-2-3-To-tune-or-not-to-tune" class="headerlink" title="5.2.3 To tune or not to tune?"></a>5.2.3 To tune or not to tune?</h4><p>总共有两种常用的模型迁移方式：feature extraction (where the pre-trained parameters are frozen), and fine-tuning (where the pre-trained parameters are unfrozen and fine-tuned).</p>
+<p><img src="/2021/08/10/ptm-survey/images\ptm7.JPG" alt></p>
+<h3 id="5-3-Fine-Tuning-Strategies"><a href="#5-3-Fine-Tuning-Strategies" class="headerlink" title="5.3 Fine-Tuning Strategies"></a>5.3 Fine-Tuning Strategies</h3><p><strong>Two-stage fine-tuning</strong></p>
+<p>第一阶段为中间任务，第二阶段为目标任务</p>
+<p><strong>Multi-task fine-tuning</strong></p>
+<p>multi-task learning and pre-training are complementary technologies.</p>
+<p><strong>Fine-tuning with extra adaptation modules</strong></p>
+<p>The main drawback of fine-tuning is its parameter ineffciency: every downstream task has its own fine-tuned parameters. Therefore, a better solution is to inject some fine-tunable adaptation modules into PTMs while the original parameters are fixed.</p>
+<p><strong>Others</strong></p>
+<p>self-ensemble ，self-distillation，gradual unfreezing，sequential unfreezing</p>
+<p><strong>Prompt-based Tuning</strong></p>
+<p>我们将近代NLP技术的发展总结为四种范式，分别为：</p>
+<ul>
+<li>P1. 非神经网络时代的完全监督学习 （Fully Supervised Learning, Non-Neural Network）</li>
+<li>P2. 基于神经网络的完全监督学习 (Fully Supervised Learning, Neural Network)</li>
+<li>P3. 预训练，精调范式 (Pre-train, Fine-tune)</li>
+<li>P4. 预训练，提示，预测范式（Pre-train, Prompt, Predict）</li>
+</ul>
+<p>第5章都在聊P3，Prompt-based Tuning这是大方向，不在这阐述，专门开一篇聊这个。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2003.08271v2.pdf">https://arxiv.org/pdf/2003.08271v2.pdf</a></p>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/Pre-trained-Models/">Pre-trained Models</a></div><hr></div></article></div><!--!--><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-08-06  <a class="commentCountImg" href="/2021/08/06/kg-bert/#comment-container"><span class="display-none-class">d959049bb39f5499e0cb44a98e0854ae</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="d959049bb39f5499e0cb44a98e0854ae">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>4 m  <i class="fas fa-pencil-alt"> </i>0.7 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/06/kg-bert/">KG-BERT</a></h1><div class="content"><h2 id="一-背景补充"><a href="#一-背景补充" class="headerlink" title="一.背景补充"></a>一.背景补充</h2><p><img src="https://pic4.zhimg.com/80/v2-4a509722384dbf4e8a7fb380f6bfdc93_720w.jpg" alt="img"></p>
+<p>知识图谱普遍存在不完备的问题。以上图为例，黑色的箭头表示已经存在的关系，红色的虚线则是缺失的关系。知识图谱补全是基于图谱里已有的关系去推理出缺失的关系。</p>
+<p>由于BERT在NLP取得的成绩，作者将其迁移到知识图谱补全的应用上。</p>
+<h2 id="二-结构"><a href="#二-结构" class="headerlink" title="二.结构"></a>二.结构</h2><p>作者设计了两种训练方式的KG - BERT, 可以运用到不同的知识图谱补全任务当中。</p>
+<p><strong>2.1 Illustrations of fine-tuning KG-BERT for predicting the plausibility of a triple</strong></p>
+<p><img src="/2021/08/06/kg-bert/images\kgbert1.JPG" alt></p>
+<p>输入由三部分组成，$Head$，$Relation$，$Tail$。举个例子，$Head$可以是“Steven Paul Jobs was an American business magnate,entrepreneur and investor.” 或者“Steve Jobs”，$Relation$可以是“founded”，$Tail$可以是“Apple Inc. is an American multinational technology company headquartered in Cupertino, California.”或者“Apple Inc.”。用$[SEP]$分隔实体和关系。输入为3个向量的sum，即token, segment 和position embeddings。对于segment，实体的segment Embedding为$e_A$，而关系的segment Embedding为$e_B$。对于position ，相同position的不同token使用相同的position embedding。</p>
+<p>对于输入的三元组$\tau=(h,r,t)$，目标函数为：</p>
+<script type="math/tex; mode=display">
+S_{\tau}=f(h,r,t)=sigmoid(CW^T)，S_{\tau} \in \mathbb{R}^2,S_{\tau 0},
+S_{\tau 1} \in [0,1]</script><p>损失函数$S$和$y$的交叉熵：</p>
+<script type="math/tex; mode=display">
+L=-\sum_{\tau \in D^{+}\cup D^{-}}(y_{\tau}log(S_{\tau0})+(1-y_{\tau}log(S_{\tau1})))</script><p>其中$y_{\tau}\in \{0,1\}$是标签。</p>
+<p>关于负样本的构造，作者是将正样本的$Head$或者$Tail$变成随机替换成别的，如下</p>
+<script type="math/tex; mode=display">
+D^{-}=\{(h^{'},r,t)|h^{'}\in E\cap h^{'}\neq h \cap(h^{'},r,t)\notin D^{+} \}\\\cup\{(h,r,t^{'})|t^{'}\in E\cap t^{'}\neq t \cap(h,r,t^{'})\notin D^{+}\}</script><p>其中$E$为实体的集合。</p>
+<p><strong>2.2 Illustrations of fine-tuning KG-BERT for predicting the relation between two entities</strong></p>
+<p><img src="/2021/08/06/kg-bert/images\kgbert2.JPG" alt></p>
+<p>作者发现直接使用两个实体去预测关系，效果优于使用两个实体和一个随机关系（这里本人认为一个随机的关系本来就是错误特征，感觉肯定会影响预测结果）。这里和2.1结构的差异在于：1.输入从实体加关系的三输入变成基于实体的双输入2.输出从二分类变成多分类</p>
+<p>目标函数为：</p>
+<script type="math/tex; mode=display">
+S_{\tau}^{'}=f(h,r,t)=softmax(CW^{'T})</script><p>损失函数$S^{‘}$和$y^{‘}$的交叉熵：</p>
+<script type="math/tex; mode=display">
+L^{'}=-\sum_{\tau \in D^{+}}\sum_{i=1}^{R}y_{\tau i}^{'}log(s^{'}_{\tau i})</script><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://github.com/yao8839836/kg-bert">https://github.com/yao8839836/kg-bert</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/355391327">https://zhuanlan.zhihu.com/p/355391327</a></p>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/KG-BERT/">KG-BERT</a></div><hr></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-08-04  <a class="commentCountImg" href="/2021/08/04/word2vec/#comment-container"><span class="display-none-class">5557345d5f80a07d7c4cb69fb82373ba</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="5557345d5f80a07d7c4cb69fb82373ba">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>a minute  <i class="fas fa-pencil-alt"> </i>0.2 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/04/word2vec/">word2vec</a></h1><div class="content"><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><h2 id="一-原理"><a href="#一-原理" class="headerlink" title="一.原理"></a>一.原理</h2><p>有两种训练方式，一个为CBOW，另一个为Skip-gram。</p>
+<h2 id="二-代码"><a href="#二-代码" class="headerlink" title="二.代码"></a>二.代码</h2><p><strong>训练代码</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from gensim.models.word2vec import Word2Vec</span><br><span class="line">import  pandas as pd</span><br><span class="line">from gensim import models</span><br><span class="line">import jieba</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">###train</span><br><span class="line">data=pd.read_csv(data_path)</span><br><span class="line">sentences=data.tolist()</span><br><span class="line">model= Word2Vec()</span><br><span class="line">model.build_vocab(sentences)</span><br><span class="line">model.train(sentences,total_examples = model.corpus_count,epochs = 5)</span><br><span class="line">model.save(model_path)</span><br></pre></td></tr></table></figure>
+<p><strong>词向量矩阵</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from gensim import models</span><br><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    model=models.KeyedVectors.load_word2vec_format(model_path,binary=True)</span><br><span class="line">    print(model.vectors)   ##(779845, 400))</span><br><span class="line">    print(&quot;\n&quot;)</span><br><span class="line">    print(model.index_to_key)</span><br><span class="line">    print(&quot;\n&quot;)</span><br><span class="line">    print(model[&quot;的&quot;])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">array([[-1.3980628e+00, -4.6281612e-01,  5.8368486e-01, ...,         5.3952241e-01,  4.4697687e-01,  1.3505782e+00],       [ 4.9143720e-01, -1.4818899e-01, -2.8366420e-01, ...,         1.1110669e+00,  2.1992767e-01,  7.0457202e-01],       [-8.5650706e-01,  8.2832746e-02, -8.4218192e-01, ...,         2.1654253e+00,  6.4846051e-01, -5.7714492e-01],       ...,       [ 7.5072781e-03, -1.3543828e-02,  2.3101490e-02, ...,         4.2363801e-03, -5.6749382e-03,  6.3404259e-03],       [-2.6244391e-04, -3.0459568e-02,  5.9752418e-03, ...,         1.7844304e-02, -4.7109672e-04,  7.7916058e-03],       [ 7.2062697e-04, -6.5988898e-03,  1.1346856e-02, ...,        -3.7340564e-03, -1.8825980e-02,  2.7245486e-03]], dtype=float32)</span><br><span class="line"></span><br><span class="line">[&#x27;，&#x27;, &#x27;的&#x27;, &#x27;。&#x27;, &#x27;、&#x27;, &#x27;０&#x27;, &#x27;１&#x27;, &#x27;在&#x27;, &#x27;”&#x27;, &#x27;２&#x27;, &#x27;了&#x27;, &#x27;“&#x27;, &#x27;和&#x27;, &#x27;是&#x27;, &#x27;５&#x27;, ...]</span><br><span class="line"></span><br><span class="line">array([ 4.9143720e-01, -1.4818899e-01, -2.8366420e-01, -3.6405793e-01,        1.0851435e-01,  4.9507666e-02, -7.1219063e-01, -5.4614645e-01,       -1.3581418e+00,  3.0274218e-01,  6.1700332e-01,  3.5553512e-01,        1.6602433e+00,  7.5298291e-01, -1.4151905e-01, -2.1077128e-01,       -2.6325354e-01,  1.6108564e+00, -4.6750236e-01, -1.6261842e+00,        1.3063166e-01,  8.0702168e-01,  4.0011466e-01,  1.2198541e+00,       -6.2879241e-01,  ... 2.1928079e-01,  7.1725255e-01, -2.3430648e-01, -1.2066336e+00,        9.7590965e-01, -1.5906478e-01, -3.5802779e-01, -3.8005975e-01,        1.9056025e-01,  1.1110669e+00,  2.1992767e-01,  7.0457202e-01],      dtype=float32)</span><br></pre></td></tr></table></figure>
+<h3 id><a href="#" class="headerlink" title=" "></a> </h3></div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/%E8%AF%8D%E5%90%91%E9%87%8F/">词向量</a></div><hr></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-08-04  <a class="commentCountImg" href="/2021/08/04/short-chinese-text-match/#comment-container"><span class="display-none-class">e42e73069e4b8f9b20abc430afce93b1</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="e42e73069e4b8f9b20abc430afce93b1">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>8 m  <i class="fas fa-pencil-alt"> </i>1.2 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/08/04/short-chinese-text-match/">Neural Graph Matching Networks for Chinese Short Text Matching</a></h1><div class="content"><h2 id="1-摘要"><a href="#1-摘要" class="headerlink" title="1.摘要"></a>1.摘要</h2><p>对于中文短文本匹配，通常基于词粒度而不是字粒度。但是分词结果可能是错误的、模糊的或不一致的，从而损害最终的匹配性能。比如下图：字符序列“南京市长江大桥”经过不同的分词可能表达为不同的意思。</p>
+<p><img src="/2021/08/04/short-chinese-text-match/images\lattice.JPG" alt></p>
+<p>为了解决这个问题，作者提出了一种基于图神经网络的中文短文本匹配方法。不是将句子分割成一个单词序列，而是保留所有可能的分割路径，形成一个词格图，如上图所示。</p>
+<h2 id="2-问题定义"><a href="#2-问题定义" class="headerlink" title="2.问题定义"></a>2.问题定义</h2><p>将两个待匹配中文短文本分别定义为$S_a=\left \{ C_1^a,C_2^a,…,C_{t_a}^a \right \}$，$S_b=\left \{ C_1^b,C_2^b,…,C_{t_b}^b \right \}$，其中$C_i^a$表示句子$a$第$i$个字，$C_j^b$表示句子$b$第$j$个字，$t_a$，$t_b$分别表示两个句子的长度。$f(S_a,S_b)$是目标函数，输出为两个文本的匹配度。</p>
+<p>词格图用$G=(\nu,\xi)$表示，其中$\nu$是节点集，包括所有字符序列。$\xi$表示边集，如果$\nu$中两个顶点$v_i$和$v_j$相邻，那么就存在一个边为$e_{ij}$。$N_{fw}(v_i)$表示节点$v_i$ 正向的所有可达节点的集合,$N_{bw}(v_i)$表示节点$v_i$ 反向的所有可达节点的集合。句子$a$的词格图为$G^a(\nu_a,\xi_a)$，句子$b$的词格图为$G^b(\nu_b,\xi_b)$。</p>
+<h2 id="3-模型结构"><a href="#3-模型结构" class="headerlink" title="3.模型结构"></a>3.模型结构</h2><p><img src="/2021/08/04/short-chinese-text-match/images\entire1.JPG" alt></p>
+<p>模型分成3个部分，1.语言节点表示 2.图神经匹配 3.相关性分类器</p>
+<h3 id="3-1-语言节点表示"><a href="#3-1-语言节点表示" class="headerlink" title="3.1 语言节点表示"></a>3.1 语言节点表示</h3><p>这一部分基于BERT的结构</p>
+<p>1.BERT的token表示基于字粒度，可以得到$\left \{ [CLS],C_1^a,C_2^a,…,C_{ta}^a,[SEP],C_1^b,C_2^b,…,C_{t_b}^b,[SEP] \right \}$,如上图所示。</p>
+<p>2.BERT的输出为各个字的Embedding，$ \left \{\textbf{C}^{CLS},\textbf{C}_1^a,\textbf{C}_2^a,…,\textbf{C}_{t_a}^a,\textbf{C}^{SEP},\textbf{C}_1^b,\textbf{C}_2^b,…,\textbf{C}_{t_b},\textbf{C}^{SEP} \right \}$</p>
+<p>3.假设节点$v_i$包含$n_i$个连续字符，起始字符位置为$s_i$，即$ \left \{C_{s_i},C_{s_{i+1}},…,C_{s_{i}+n_i-1} \right \}$，这里$v_i$表示句子$a$或者$b$的结点。</p>
+<p>特征识别分数向量$\textbf{U}_{s_i+k}=softmax(FFN(\textbf{C}_{s_i+k}))$，$FFN$为两层</p>
+<p>初始的节点向量为$V_i=\sum_{k=0}^{n_i-1}\textbf{U}_{s_i+k}\odot\textbf{C}_{s_i+k}$，其中$\odot$表示两个向量对应各个元素相乘。</p>
+<h3 id="3-2-图神经匹配"><a href="#3-2-图神经匹配" class="headerlink" title="3.2 图神经匹配"></a>3.2 图神经匹配</h3><p><strong>初始化</strong>：$h$为结点的向量表示，对于初始化阶段，将$h_i^0$初始化为$V_i$</p>
+<p><strong>信息传递</strong>:对于第$l$次迭代，$G_a$中某个结点$v_i$由如下四个部分组成</p>
+<script type="math/tex; mode=display">
+m_i^{fw}=\sum_{v_j \in N_{fw}(v_i)}\alpha_{ij}(W^{fw}h_j^{l-1}),
+\\m_i^{bw}=\sum_{v_k \in N_{bw}(v_i)}\alpha_{ik}(W^{bw}h_k^{l-1}),
+\\m_i^{b1}=\sum_{v_m \in V^b}\alpha_{im}(W^{fw}h_m^{l-1}),
+\\m_i^{b2}=\sum_{v_q \in V^b}\alpha_{iq}(W^{bw}h_q^{l-1})，</script><p>其中$\alpha_{ij},\alpha_{ik},\alpha_{im},\alpha_{iq}$是注意力系数，$W^{fw},W^{bw}$是注意力系数参数</p>
+<p>然后定义两种信息为$m_i^{self}\triangleq[m_i^{fw},m_i^{bw}]，m_i^{cross}\triangleq[m_i^{b1},m_i^{b2}]$</p>
+<p><strong>表示更新</strong>：得到两种信息后，需要更新结点$ v_i$的向量表示</p>
+<script type="math/tex; mode=display">
+d_k=cosine(w_k^{cos}\odot m_i^{self},w_k^{cos}\odot m_i^{cross})</script><p>其中$w_k^{cos}$为参数，$d_k$为multi-perspective cosine distance，可以衡量两种信息的距离，$k \in \left \{ 1,2,3,…P\right\}$，$P$是视角的数量。</p>
+<script type="math/tex; mode=display">
+h_i^l=FFN([m_i^{self},\textbf{d}_i])</script><p>其中$\textbf{d}_i\triangleq[d_1,d_2,…,d_P]$,$FFN$两层。</p>
+<p><strong>句子的图级别表示</strong>：</p>
+<p>总共经历了$L$次迭代，得到$h_i^L$为结点$v_i$最终的向量表示（$h_i^L$includes not only the information from its reachable nodes but also information of pairwise comparison with all nodes in another graph)</p>
+<p>最终，两个句子的图级别表示分别为</p>
+<script type="math/tex; mode=display">
+g^a=attentive pooling(\left \{ h_{1a}^L,h_{2a}^L,...,h_{node-num_a a}^L \right \}),
+\\g^b=attentive pooling(\left \{ h_{1b}^L,h_{2b}^L,...,h_{node-num_b b}^L \right \})</script><h3 id="3-3-分类器"><a href="#3-3-分类器" class="headerlink" title="3.3 分类器"></a>3.3 分类器</h3><p>得到$g^a,g^b$后，两句子的相似度可以用分类器衡量：</p>
+<script type="math/tex; mode=display">
+P=FFN([g^a,g^b,g^a \odot g^b,|g^a-g^b|])</script><p>其中$P \in [0,1]$。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43390809/article/details/114077216">https://blog.csdn.net/qq_43390809/article/details/114077216</a></p>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/%E4%B8%AD%E6%96%87%E7%9F%AD%E6%96%87%E6%9C%AC%E5%8C%B9%E9%85%8D/">中文短文本匹配</a></div><hr></div></article></div><div class="card"><article class="card-content article" role="article"><div class="article-meta size-small is-uppercase level is-mobile"><div class="level-left"><i class="far fa-calendar-plus"> </i>2021-07-28  <a class="commentCountImg" href="/2021/07/28/word-emb-add/#comment-container"><span class="display-none-class">27d8132878abc1f5fae21650cfc4df15</span><i class="far fa-comment-dots"></i> <span class="commentCount" id="27d8132878abc1f5fae21650cfc4df15">99+</span>  </a><span class="level-item"><i class="far fa-clock"> </i>2 m  <i class="fas fa-pencil-alt"> </i>0.3 k</span></div></div><h1 class="title is-3 is-size-4-mobile"><a class="link-muted" href="/2021/07/28/word-emb-add/">nlp中使用预训练的词向量和随机初始化的词向量的区别在哪里？</a></h1><div class="content"><p>当你训练数据<strong>不充足</strong>的时候，可以直接使用别人已经预训练好的词向量，也可以根据自己的训练数据微调(fine-tuning)预训练词向量，也可以把词向量和整个模型一块训练，但是通常预训练的词向量我们不会再在训练的过程中进行更新。</p>
+<p>当你的训练数据<strong>比较充足</strong>的时候，并且想让词向量能更好的捕捉自己的训练数据的语义信息时，应该使用随机初始化的词向量。当然，随机初始化的词向量必须要在训练网络的过程中不断进行更新，就和神经网络的权重参数一样进行训练。</p>
+<p>例子：</p>
+<p>1.直观展示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import torch</span><br><span class="line">from torch import nn</span><br><span class="line">from torch.autograd import Variable</span><br><span class="line">###random</span><br><span class="line">embeds = nn.Embedding(2, 5) </span><br><span class="line">print(embeds.weight)</span><br><span class="line">embeds = nn.Embedding(2, 5) </span><br><span class="line">print(embeds.weight)</span><br><span class="line">###from pretrain</span><br><span class="line">weight = torch.FloatTensor([[1, 2.3, 3], [4, 5.1, 6.3]])</span><br><span class="line">embedding = nn.Embedding.from_pretrained(weight)</span><br><span class="line">print(embedding.weight)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Parameter containing:</span><br><span class="line">tensor([[-0.1754,  1.6604, -1.5025, -1.0980, -0.4718],</span><br><span class="line">        [-1.1276,  0.1408, -1.0746, -1.2768, -0.6789]], requires_grad=True)</span><br><span class="line">Parameter containing:</span><br><span class="line">tensor([[-0.7366,  0.0607,  0.6151,  0.2282,  0.3878],</span><br><span class="line">        [-1.1365,  0.1844, -1.1191, -0.8787, -0.5121]], requires_grad=True)</span><br><span class="line">Parameter containing:</span><br><span class="line">tensor([[1.0000, 2.3000, 3.0000],</span><br><span class="line">        [4.0000, 5.1000, 6.3000]])</span><br></pre></td></tr></table></figure>
+<p>2.n-gram</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">self.embedding = nn.Embedding.from_pretrained(config.embedding_pretrained, freeze=False)</span><br><span class="line">self.embedding_ngram2 = nn.Embedding(config.n_gram_vocab, config.embed)</span><br><span class="line">self.embedding_ngram3 = nn.Embedding(config.n_gram_vocab, config.embed)</span><br></pre></td></tr></table></figure>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/337950427">https://www.zhihu.com/question/337950427</a></p>
+</div><div class="index-category-tag"><div class="level-item"><i class="fas fa-folder-open has-text-grey"> </i><a class="article-more button is-small link-muted index-categories" href="/categories/NLP/">NLP</a></div>  <div class="level-item"><i class="fas fa-tags has-text-grey"> </i><a class="article-more button is-small link-muted index-tags" href="/tags/%E8%AF%8D%E5%90%91%E9%87%8F/">词向量</a></div><hr></div></article></div><!--!--><nav class="pagination" role="navigation" aria-label="pagination"><div class="pagination-previous is-invisible is-hidden-mobile"><a href="/categories/NLP/page/0/">Previous</a></div><div class="pagination-next"><a href="/categories/NLP/page/2/">Next</a></div><ul class="pagination-list is-hidden-mobile"><li><a class="pagination-link is-current" href="/categories/NLP/">1</a></li><li><a class="pagination-link" href="/categories/NLP/page/2/">2</a></li><li><a class="pagination-link" href="/categories/NLP/page/3/">3</a></li></ul></nav></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1 is-sticky"><!--!--><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="https://avatars.githubusercontent.com/u/50144751?v=4" alt="Lavine Hu"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Lavine Hu</p><p class="is-size-6 is-block">又菜又爱玩，欢迎批评指正，合作或者技术探讨可联系邮箱734190724@qq.com</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>杭州</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">35</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">11</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">34</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/hlw95" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/hlw95"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Weibo" href="/null"><i class="fab fa-weibo"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Email" href="/18829272646@163.com"><i class="fa fa-envelope"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Next" href="/null"><i class="fab fa-dribbble"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="RSS" href="/atom.xml"><i class="fas fa-rss"></i></a></div><div><hr><p id="hitokoto">:D 一言句子获取中...</p><script type="text/javascript" defer>function getYiyan(){
+                                $.getJSON("https://v1.hitokoto.cn/", function (data) {
+                                if(data){
+                                    $('#hitokoto').html("");
+                                    $('#hitokoto').append("<strong style='color: #3273dc;'>"+data.hitokoto+"</strong>"+
+                                    "<p>"+"From《"+data.from+"》</p><p>Provider-"+data.creator+"</p>");
+                                }});}
+                                $(function (){getYiyan();$('#hitokoto').click(function(){getYiyan();})});</script></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-08-27T14:48:39.000Z">2021-08-27</time></p><p class="title"><a href="/2021/08/27/concert/">ConSERT A Contrastive Framework for Self-Supervised Sentence Representation Transfer</a></p><p class="categories"><a href="/categories/NLP/">NLP</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-08-25T16:36:13.000Z">2021-08-26</time></p><p class="title"><a href="/2021/08/26/gpt/">gpt</a></p><p class="categories"><a href="/categories/NLP/">NLP</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-08-23T15:45:36.000Z">2021-08-23</time></p><p class="title"><a href="/2021/08/23/text-cnn/">TextCNN TextRNN TextRCNN</a></p><p class="categories"><a href="/categories/NLP/">NLP</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-08-21T11:59:47.000Z">2021-08-21</time></p><p class="title"><a href="/2021/08/21/meituan/">BERT在美团搜索核心排序的探索和实践</a></p><p class="categories"><a href="/categories/%E8%BD%AC%E8%BD%BD/">转载</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2021-08-19T15:01:10.000Z">2021-08-19</time></p><p class="title"><a href="/2021/08/19/elmo/">ELMo</a></p><p class="categories"><a href="/categories/NLP/">NLP</a></p></div></article></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Categories</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/categories/AR-AE/"><span class="level-start"><span class="level-item">AR_AE</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/GNN/"><span class="level-start"><span class="level-item">GNN</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/IDE/"><span class="level-start"><span class="level-item">IDE</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/L2R/"><span class="level-start"><span class="level-item">L2R</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/NLP/"><span class="level-start"><span class="level-item">NLP</span></span><span class="level-end"><span class="level-item tag">22</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/hexo/"><span class="level-start"><span class="level-item">hexo</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%90%9C%E7%B4%A2%E6%8E%92%E5%BA%8F/"><span class="level-start"><span class="level-item">搜索排序</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"><span class="level-start"><span class="level-item">数据结构</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><span class="level-start"><span class="level-item">深度学习</span></span><span class="level-end"><span class="level-item tag">4</span></span></a></li><li><a class="level is-mobile is-marginless" href="/categories/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"><span class="level-start"><span class="level-item">算法导论</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><a class="level is-mobile is-marginless" href="/categories/"><span class="level-start"><span class="level-item">查看全部&gt;&gt;</span></span></a></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile is-marginless" href="/archives/2021/08/"><span class="level-start"><span class="level-item">August 2021</span></span><span class="level-end"><span class="level-item tag">16</span></span></a></li><li><a class="level is-mobile is-marginless" href="/archives/2021/07/"><span class="level-start"><span class="level-item">July 2021</span></span><span class="level-end"><span class="level-item tag">19</span></span></a></li></ul></div></div></div><div class="card widget"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E8%AF%8D%E5%90%91%E9%87%8F/"><span class="tag">词向量</span><span class="tag is-grey-lightest">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/AR-AE/"><span class="tag">AR_AE</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/BERT/"><span class="tag">BERT</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ConSERT/"><span class="tag">ConSERT</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/DSSM/"><span class="tag">DSSM</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/ELMo/"><span class="tag">ELMo</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/GNN%E7%BB%BC%E8%BF%B0/"><span class="tag">GNN综述</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/KG-BERT/"><span class="tag">KG-BERT</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/L2R/"><span class="tag">L2R</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Pre-trained-Models/"><span class="tag">Pre-trained Models</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Sentence-BERT/"><span class="tag">Sentence-BERT</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/TextCNN-TextRNN-TextRCNN/"><span class="tag">TextCNN TextRNN TextRCNN</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Tokenization/"><span class="tag">Tokenization</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/entropy/"><span class="tag">entropy</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/fasttext/"><span class="tag">fasttext</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/gpt/"><span class="tag">gpt</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/hexo/"><span class="tag">hexo</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/pycharm/"><span class="tag">pycharm</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/seq2seq/"><span class="tag">seq2seq</span><span class="tag is-grey-lightest">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/text-generate/"><span class="tag">text generate</span><span class="tag is-grey-lightest">1</span></a></div></div><div class="field is-grouped is-grouped-multiline"><a class="tags has-addons" href="/tags/"><span class="tag">查看全部&gt;&gt;</span></a></div></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">Subscribe for updates</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div><!--!--></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Lavine Hu</a><p class="size-small"><span>&copy; 2021 Lavine Hu</span>  Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a> &amp; <a href="https://github.com/removeif/hexo-theme-amazing" target="_blank">Amazing</a> <br><span>© 版权说明：[本网站所有内容均收集于互联网或自己创作,<br />&nbsp;&nbsp;&nbsp;&nbsp;方便于网友与自己学习交流，如有侵权，请<a href="/message" target="_blank">留言</a>，立即处理]<br /></span><span><span id="statistic-times">loading...</span><script>function createTime(time) {
+            var n = new Date(time);
+            now.setTime(now.getTime() + 250),
+                days = (now - n) / 1e3 / 60 / 60 / 24,
+                dnum = Math.floor(days),
+                hours = (now - n) / 1e3 / 60 / 60 - 24 * dnum,
+                hnum = Math.floor(hours),
+            1 == String(hnum).length && (hnum = "0" + hnum),
+                minutes = (now - n) / 1e3 / 60 - 1440 * dnum - 60 * hnum,
+                mnum = Math.floor(minutes),
+            1 == String(mnum).length && (mnum = "0" + mnum),
+                seconds = (now - n) / 1e3 - 86400 * dnum - 3600 * hnum - 60 * mnum,
+                snum = Math.round(seconds),
+            1 == String(snum).length && (snum = "0" + snum),
+                document.getElementById("statistic-times").innerHTML = "❤️Site from <strong>"+time.split(" ")[0].replace(/\//g,".")+"</strong> has existed <strong>" + dnum + "</strong> d <strong>" + hnum + "</strong> h <strong>" + mnum + "</strong> m <strong>" + snum + "</strong> s！❤️";
+        }var now = new Date();setInterval("createTime('2021/07/17 00:00:00')", 250,"");</script><br></span><div class="size-small"><span>❤️Thx <strong><span id="busuanzi_value_site_uv">99+</span></strong> users <strong><span id="busuanzi_value_site_pv">99+</span></strong> visited！❤️</span></div></p></div><div class="level-end"><div class="sideMusic"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="/js/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script><meting-js style="width: auto;height: 2000px;" server="netease" type="playlist" id="2364053447" theme="#2980b9" loop="all" autoplay="false" order="list" storageName="aplayer-setting" lrctype="0" list-max-height="400px" fixed="true"></meting-js></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" async></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.6.8/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.7.0/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><script src="/js/main.js" defer></script><script>$.getScript('/js/comment-issue-data.js',function(){loadIssueData('a0eb7de1c4dc4908943b','b466946cbbe843a4a6ef249eb54ae5956d2f91c3','hlw95','hlw95.github.io',false);})</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script><script type="text/javascript">var pjax = new Pjax({
+            elements: "a",//代表点击链接就更新
+            selectors: [  //代表要更新的节点
+                ".section",
+                "title"
+            ],
+            cache: true,
+            cacheBust:false
+        })
+
+        function loadBusuanzi(){
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js", function () {});
+        }
+
+        function loadMathJax() { //加载mathjax
+            $.getScript("//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML", function () {
+                MathJax.Hub.Config({ tex2jax: { inlineMath: [['$', '$'], ['\(', '\)']] } });
+                var math = document.getElementsByClassName("entry-content")[0];
+                MathJax.Hub.Queue(["Typeset", MathJax.Hub, math]);
+            });
+        };
+
+        // 开始 PJAX 执行的函数
+        document.addEventListener('pjax:send', function () {
+        });
+        
+        // PJAX 完成之后执行的函数，可以和上面的重载放在一起
+        document.addEventListener('pjax:complete', function () {
+            $(".section").css({opacity:1});
+            if(true){
+                $.getScript('/js/comment-issue-data.js',function(){loadIssueData('a0eb7de1c4dc4908943b','b466946cbbe843a4a6ef249eb54ae5956d2f91c3','hlw95','hlw95.github.io',false);});
+            }
+            if(false){
+                loadMathJax();
+            }
+            loadMainJs(jQuery, window.moment, window.ClipboardJS, window.IcarusThemeSettings);
+            loadBackTop();
+            loadBusuanzi();
+            if(typeof loadBanner == 'function'){
+                loadBanner();
+            }
+        });</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginModelPath":"assets/","model":{"scale":1,"hHeadPos":0.5,"vHeadPos":0.618,"display":null,"superSample":2,"width":250,"height":500,"position":"right","hOffset":0,"vOffset":-20,"jsonPath":"/live2dw/assets/hijiki.model.json"},"mobile":{"show":true,"scale":0.5,"react":null,"opacityDefault":0.7,"opacityOnHover":0.2},"log":false,"pluginJsPath":"lib/","pluginRootPath":"live2dw/","tagMode":false});</script></body></html>
